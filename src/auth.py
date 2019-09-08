@@ -12,8 +12,6 @@ auth = flask_httpauth.HTTPBasicAuth()
 
 users = {ADMIN: generate_password_hash(PASS)}
 
-print(users)
-
 
 @auth.verify_password
 def verify_password(username, password):
