@@ -5,11 +5,14 @@ from dotenv import load_dotenv
 from loguru import logger
 
 from .setup import set_logger_path
+from .auth import auth
 
 # logger
 logger_path = set_logger_path()
-logger.add(os.path.join(logger_path, 'server.log'), format="{time:YYYY-MM-DD at HH:mm:ss} {level} - {message}", level='INFO', retention='1 day')
-logger.add(os.path.join(logger_path, 'error.log'), format='{time:YYYY-MM-DD at HH:mm:ss} {level} - {message}', level='ERROR', retention='10 days')
+logger.add(os.path.join(logger_path, 'server.log'),
+           format="{time:YYYY-MM-DD at HH:mm:ss} {level} - {message}", level='INFO', retention='1 day')
+logger.add(os.path.join(logger_path, 'error.log'),
+           format='{time:YYYY-MM-DD at HH:mm:ss} {level} - {message}', level='ERROR', retention='10 days')
 
 # .env variables
 load_dotenv()
@@ -26,3 +29,16 @@ app_config = {
 }
 # app
 app = Flask(__name__)
+
+# routes
+
+
+@app.route('/')
+def nothing():
+    return 'nothing here'
+
+
+@app.route('/home')
+@auth.login_required
+def home():
+    return f'Hello there, {auth.username()}'

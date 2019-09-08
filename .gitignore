@@ -127,3 +127,6 @@ bin/
 lib/
 lib/
 bin/
+lib64/
+logs/
+.vscode
