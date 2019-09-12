@@ -28,3 +28,9 @@ def home():
 @auth.login_required
 def handshake():
     return f'Hello there, {auth.username()}'
+
+
+@app.route('/daily_data', method=['POST', 'GET', 'DELETE'])
+@auth.login_required
+def handle_daily_data():
+    pass
