@@ -4,18 +4,21 @@ from .update_lenses import add_coffee, add_travel, lens_food
 
 meal_keys = set(['lunch', 'breakfast', 'dinner', 'other'])
 possible_foods = set(['sweet', 'carb', 'proteins', 'water', 'veg'])
+default_food = dict(zip(
+    meal_keys,
+    map(lambda _: [], range(len(meal_keys)))
+))
 
 
 def check_for_food(words):
     meal = None
     foods = []
-    breakpoint()
-    for w in words:
-        found_meal = find(meal_keys, lambda meal: meal in w)
+    for word in words:
+        found_meal = find(meal_keys, lambda m: m in word)
         if found_meal is not None:
             meal = found_meal
         else:
-            food = find(possible_foods, lambda food: food in w)
+            food = find(possible_foods, lambda f: f in word)
             if food:
                 foods.append(food)
 
@@ -45,4 +48,4 @@ def keyword_mapping(text_content: str):
     if meal:
         return lens_food({
             meal: food
-        })
+        }, default=default_food)

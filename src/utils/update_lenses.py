@@ -31,15 +31,15 @@ def lens_fields(new_data):
     return stage.collect(), update
 
 
-def lens_food(food):
+def lens_food(food, default):
     incoming_meals = set(food.keys())
 
-    stage = lens.Get('food', default={}).Each().Filter(
+    stage = lens.Get('food', default=default).Each().Filter(
         lambda tup: tup[0] in incoming_meals)
 
     def add_food(food_tup):
         meal, food_list = food_tup
-        return (meal, uniq(food_list + food[meal]))
+        return (meal, uniq(food[meal] + food_list))
 
     update = stage.modify(add_food)
 
