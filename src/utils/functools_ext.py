@@ -11,6 +11,7 @@ def reduce_right(function, iterable, initializer=None):
 
 def find_n_builder(n: int = -1):
     def find(iterable, predicate):
+
         match = predicate if callable(predicate) else lambda f: f == predicate
         matches = []
         it = iter(iterable)
