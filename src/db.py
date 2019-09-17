@@ -1,7 +1,9 @@
 from pymongo import MongoClient, errors
 from loguru import logger
+from functools import wraps
 
 from .setup import is_production, db_name, collection_name, max_timeout
+from .errors import FailedDatabaseConnection
 
 
 def connect_to_db():
@@ -26,3 +28,17 @@ def connect_to_db():
             f'... connection timed out with the db, is it running? {err}')
 
         return None, None
+
+
+def assert_db(collection):
+    def decorator(f):
+        @wraps(f)
+        def wrapped(*args, **kwargs):
+            if collection is None:
+                raise FailedDatabaseConnection(
+                    'Failed to ensablish db connection')
+
+            return f(*args, **kwargs)
+
+        return wrapped
+    return decorator
