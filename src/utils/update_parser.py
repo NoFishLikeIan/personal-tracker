@@ -1,3 +1,5 @@
+from lenses import lens
+
 from .functools_ext import find, find_all
 from .text_utils import remove_punct
 from .update_lenses import add_coffee, add_travel, lens_food
@@ -49,3 +51,6 @@ def keyword_mapping(text_content: str):
         return lens_food({
             meal: food
         }, default=default_food)
+
+
+get_message = lens.Json().Get('message', default='').get()
