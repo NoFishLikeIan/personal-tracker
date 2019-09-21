@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  web:
+    image: "nofishlikeian/personal-tracker"
+    command: >
+      gunicorn --bind 0.0.0.0:4000 main:app
+
+    environment:
+      PYTHONUNBUFFERED: "true"
+
+    ports:
+      - "127.0.0.1:4000:4000"
+
+    volumes:
+      - "/tmp/log/web:/personal-trakcer/logs"
+
+    depends_on:
+      - db
+
+    restart: on-failure
+
+  db:
+    image: mongo
+    container_name: db
+    restart: on-failure
