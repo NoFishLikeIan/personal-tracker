@@ -49,7 +49,7 @@ def get_daily_data():
     today_id = get_today()
     data_today = collection.find_one({'date': today_id})
 
-    parsed_data = lens['_id'].modify(str)(data_today)
+    parsed_data = lens['_id'].modify(str)(data_today) if data_today else {}
 
     return {
         'succ': 1. if data_today else 0.,
