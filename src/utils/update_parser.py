@@ -2,10 +2,11 @@ from lenses import lens
 
 from .functools_ext import find, find_all
 from .text_utils import remove_punct
-from .update_lenses import add_coffee, add_travel, lens_food
+from .update_lenses import add_coffee, add_travel, lens_food, lens_mood
 
 meal_keys = set(['lunch', 'breakfast', 'dinner', 'other'])
 possible_foods = set(['sweet', 'carb', 'proteins', 'water', 'veg'])
+default_moods = ['happy', 'fine', 'sad', 'depressed', 'lonely', 'anxious']
 default_food = dict(zip(
     meal_keys,
     map(lambda _: [], range(len(meal_keys)))
@@ -25,6 +26,17 @@ def check_for_food(words):
                 foods.append(food)
 
     return meal, foods
+
+
+def check_for_mood(words):
+    moods = []
+
+    for word in words:
+        mood = find(default_moods, lambda m: m in word)
+        if mood:
+            moods.append(mood)
+
+    return moods
 
 
 def keyword_mapping(text_content: str):
@@ -51,6 +63,10 @@ def keyword_mapping(text_content: str):
         return lens_food({
             meal: food
         }, default=default_food)
+
+    mood = check_for_mood(words_set)
+    if mood:
+        return lens_mood(mood)
 
 
 get_message = lens.Json().Get('message', default='').get()

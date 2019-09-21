@@ -44,3 +44,11 @@ def lens_food(food, default):
     update = stage.modify(add_food)
 
     return stage.collect(), update
+
+
+def lens_mood(incoming_moods):
+    stage = lens.Get('mood', default=[])
+
+    update = stage.set(incoming_moods)
+
+    return stage.collect(), update
