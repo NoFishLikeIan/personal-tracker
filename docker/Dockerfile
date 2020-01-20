@@ -1,4 +1,4 @@
-  
+
 FROM python:3.7
 
 ENV INSTALL_PATH /personal-tracker
@@ -9,3 +9,4 @@ COPY requirements.txt requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 COPY . .
+RUN mkdir -p data/db

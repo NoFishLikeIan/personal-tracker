@@ -130,3 +130,4 @@ bin/
 lib64/
 logs/
 .vscode
+docker/all.sh

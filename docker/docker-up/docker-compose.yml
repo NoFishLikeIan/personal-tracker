@@ -23,4 +23,8 @@ services:
   db:
     image: mongo
     container_name: db
+
+    volumes:
+      - ./var/lib/mongodb:/data/db
+
     restart: on-failure
